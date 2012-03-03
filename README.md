@@ -2,4 +2,4 @@
 
 [http://seriot.ch/resources/utis_graph/utis_graph.pdf](http://seriot.ch/resources/utis_graph/utis_graph.pdf)
 
-<img src="https://github.com/nst/UTIsExplorer/raw/master/graph_detail.png" border="1+">
+<img src="https://github.com/nst/UTIsExplorer/raw/master/graph_detail.png" border="1">
