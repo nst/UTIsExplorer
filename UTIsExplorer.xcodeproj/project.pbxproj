@@ -1,0 +1,244 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		034C8A301502A42200FD7204 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034C8A2F1502A42200FD7204 /* Foundation.framework */; };
+		034C8A331502A42200FD7204 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C8A321502A42200FD7204 /* main.m */; };
+		034C8A371502A42200FD7204 /* UTIsExplorer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 034C8A361502A42200FD7204 /* UTIsExplorer.1 */; };
+		034C8A411502A46F00FD7204 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034C8A401502A46F00FD7204 /* CoreServices.framework */; };
+		034C8A421502A4E700FD7204 /* UTIsExplorer.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C8A3F1502A46500FD7204 /* UTIsExplorer.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		034C8A291502A42200FD7204 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				034C8A371502A42200FD7204 /* UTIsExplorer.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		034C8A2B1502A42200FD7204 /* UTIsExplorer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UTIsExplorer; sourceTree = BUILT_PRODUCTS_DIR; };
+		034C8A2F1502A42200FD7204 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		034C8A321502A42200FD7204 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		034C8A351502A42200FD7204 /* UTIsExplorer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UTIsExplorer-Prefix.pch"; sourceTree = "<group>"; };
+		034C8A361502A42200FD7204 /* UTIsExplorer.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = UTIsExplorer.1; sourceTree = "<group>"; };
+		034C8A3E1502A46500FD7204 /* UTIsExplorer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UTIsExplorer.h; sourceTree = "<group>"; };
+		034C8A3F1502A46500FD7204 /* UTIsExplorer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTIsExplorer.m; sourceTree = "<group>"; };
+		034C8A401502A46F00FD7204 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		034C8A281502A42200FD7204 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				034C8A301502A42200FD7204 /* Foundation.framework in Frameworks */,
+				034C8A411502A46F00FD7204 /* CoreServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034C8A201502A42100FD7204 = {
+			isa = PBXGroup;
+			children = (
+				034C8A3E1502A46500FD7204 /* UTIsExplorer.h */,
+				034C8A3F1502A46500FD7204 /* UTIsExplorer.m */,
+				034C8A311502A42200FD7204 /* UTIsExplorer */,
+				034C8A2E1502A42200FD7204 /* Frameworks */,
+				034C8A2C1502A42200FD7204 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		034C8A2C1502A42200FD7204 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				034C8A2B1502A42200FD7204 /* UTIsExplorer */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		034C8A2E1502A42200FD7204 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				034C8A401502A46F00FD7204 /* CoreServices.framework */,
+				034C8A2F1502A42200FD7204 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		034C8A311502A42200FD7204 /* UTIsExplorer */ = {
+			isa = PBXGroup;
+			children = (
+				034C8A321502A42200FD7204 /* main.m */,
+				034C8A361502A42200FD7204 /* UTIsExplorer.1 */,
+				034C8A341502A42200FD7204 /* Supporting Files */,
+			);
+			path = UTIsExplorer;
+			sourceTree = "<group>";
+		};
+		034C8A341502A42200FD7204 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				034C8A351502A42200FD7204 /* UTIsExplorer-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		034C8A2A1502A42200FD7204 /* UTIsExplorer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 034C8A3A1502A42200FD7204 /* Build configuration list for PBXNativeTarget "UTIsExplorer" */;
+			buildPhases = (
+				034C8A271502A42200FD7204 /* Sources */,
+				034C8A281502A42200FD7204 /* Frameworks */,
+				034C8A291502A42200FD7204 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UTIsExplorer;
+			productName = UTIsExplorer;
+			productReference = 034C8A2B1502A42200FD7204 /* UTIsExplorer */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		034C8A221502A42100FD7204 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 034C8A251502A42100FD7204 /* Build configuration list for PBXProject "UTIsExplorer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 034C8A201502A42100FD7204;
+			productRefGroup = 034C8A2C1502A42200FD7204 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				034C8A2A1502A42200FD7204 /* UTIsExplorer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		034C8A271502A42200FD7204 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				034C8A331502A42200FD7204 /* main.m in Sources */,
+				034C8A421502A4E700FD7204 /* UTIsExplorer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		034C8A381502A42200FD7204 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		034C8A391502A42200FD7204 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		034C8A3B1502A42200FD7204 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UTIsExplorer/UTIsExplorer-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		034C8A3C1502A42200FD7204 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UTIsExplorer/UTIsExplorer-Prefix.pch";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		034C8A251502A42100FD7204 /* Build configuration list for PBXProject "UTIsExplorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				034C8A381502A42200FD7204 /* Debug */,
+				034C8A391502A42200FD7204 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		034C8A3A1502A42200FD7204 /* Build configuration list for PBXNativeTarget "UTIsExplorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				034C8A3B1502A42200FD7204 /* Debug */,
+				034C8A3C1502A42200FD7204 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 034C8A221502A42100FD7204 /* Project object */;
+}
