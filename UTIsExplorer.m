@@ -129,29 +129,6 @@
     return;
 }
 
-- (NSString *)graphvizDescription {
-    
-    NSMutableString *ms = [NSMutableString stringWithString:@"digraph G {\n"];
-    [ms appendString:@"    node [shape=box]\n"];
-    [ms appendString:@"    graph [rankdir=LR]\n\n"];
-    
-    NSArray *sortedKeys = [[parentsForUTIs allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString *s1, NSString *s2) {
-        return [s1 compare:s2];
-    }];
-    
-    for(NSString *key in sortedKeys) {
-        NSSet *parents = [parentsForUTIs valueForKey:key];
-
-        for(NSString *p in parents) {
-            [ms appendFormat:@"    \"%@\" -> \"%@\"\n", key, p];        
-        }
-    }
-    
-    [ms appendString:@"}\n"];
-    
-    return ms;
-}
-
 - (void)addParentsForUTI:(NSString *)UTI {
     
     if([parentsForUTIs valueForKey:UTI] != nil) return;
@@ -217,6 +194,29 @@
     NSAssert([UTIs isKindOfClass:[NSArray class]], @"-- bad class: %@", [LSItemContentTypes class]);
     
     return UTIs;
+}
+
+- (NSString *)graphvizDescription {
+    
+    NSMutableString *ms = [NSMutableString stringWithString:@"digraph G {\n"];
+    [ms appendString:@"    node [shape=box]\n"];
+    [ms appendString:@"    graph [rankdir=LR]\n\n"];
+    
+    NSArray *sortedKeys = [[parentsForUTIs allKeys] sortedArrayUsingComparator:^NSComparisonResult(NSString *s1, NSString *s2) {
+        return [s1 compare:s2];
+    }];
+    
+    for(NSString *key in sortedKeys) {
+        NSSet *parents = [parentsForUTIs valueForKey:key];
+        
+        for(NSString *p in parents) {
+            [ms appendFormat:@"    \"%@\" -> \"%@\"\n", key, p];        
+        }
+    }
+    
+    [ms appendString:@"}\n"];
+    
+    return ms;
 }
 
 @end
