@@ -12,7 +12,7 @@
     NSMutableDictionary *parentsForUTIs;
 }
 
-- (NSDictionary *)buildUTIsDictionary;
+- (void)lookForUTIs:(void (^) (NSArray *UTIs))successBlock;
 
 - (NSString *)graphvizDescription;
 

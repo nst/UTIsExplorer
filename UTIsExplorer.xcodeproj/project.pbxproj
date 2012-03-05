@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0332361A150496F700F3AB5F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03323619150496F700F3AB5F /* AppKit.framework */; };
 		034C8A301502A42200FD7204 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034C8A2F1502A42200FD7204 /* Foundation.framework */; };
 		034C8A331502A42200FD7204 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C8A321502A42200FD7204 /* main.m */; };
 		034C8A371502A42200FD7204 /* UTIsExplorer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 034C8A361502A42200FD7204 /* UTIsExplorer.1 */; };
@@ -28,6 +29,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03323619150496F700F3AB5F /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		034C8A2B1502A42200FD7204 /* UTIsExplorer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = UTIsExplorer; sourceTree = BUILT_PRODUCTS_DIR; };
 		034C8A2F1502A42200FD7204 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		034C8A321502A42200FD7204 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -45,6 +47,7 @@
 			files = (
 				034C8A301502A42200FD7204 /* Foundation.framework in Frameworks */,
 				034C8A411502A46F00FD7204 /* CoreServices.framework in Frameworks */,
+				0332361A150496F700F3AB5F /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +76,7 @@
 		034C8A2E1502A42200FD7204 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03323619150496F700F3AB5F /* AppKit.framework */,
 				034C8A401502A46F00FD7204 /* CoreServices.framework */,
 				034C8A2F1502A42200FD7204 /* Foundation.framework */,
 			);
@@ -237,6 +241,7 @@
 				034C8A3C1502A42200FD7204 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

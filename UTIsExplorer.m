@@ -24,6 +24,111 @@
     [super dealloc];
 }
 
+- (void)searchForMDImporters:(void (^) (NSArray *mdImporterPaths))terminationBlock {
+    NSMetadataQuery *query = [[NSMetadataQuery alloc] init];
+    query.predicate = [NSPredicate predicateWithFormat:@"kMDItemContentTypeTree == 'com.apple.metadata-importer'"];
+
+    [[NSNotificationCenter defaultCenter] addObserverForName:NSMetadataQueryDidFinishGatheringNotification object:query queue:nil usingBlock:^(NSNotification *note) {
+        
+        [query stopQuery];
+        
+        NSMutableArray *mdImporterPaths = [NSMutableArray array];
+        
+        for(NSMetadataItem *mdItem in query.results) {
+            NSString *path = [mdItem valueForAttribute:(NSString *)kMDItemPath];
+            [mdImporterPaths addObject:path];
+        }
+        
+        terminationBlock(mdImporterPaths);
+    }];
+
+    [query startQuery];
+}
+
+- (void)searchForApplicationsMDImporters:(void (^) (NSArray *mdImporterPaths))terminationBlock {
+    NSMetadataQuery *query = [[NSMetadataQuery alloc] init];
+    query.predicate = [NSPredicate predicateWithFormat:@"kMDItemContentTypeTree == 'com.apple.application-bundle'"];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:NSMetadataQueryDidFinishGatheringNotification object:query queue:nil usingBlock:^(NSNotification *note) {
+
+        [query stopQuery];
+
+        //NSLog(@"-- %@", note);
+        
+        NSFileManager *fm = [[NSFileManager alloc] init];
+
+        NSMutableArray *mdImporterPaths = [NSMutableArray array];
+        
+        for(NSMetadataItem *mdItem in query.results) {
+            NSString *path = [mdItem valueForAttribute:(NSString *)kMDItemPath];
+            NSString *spotlightDirectory = [path stringByAppendingPathComponent:@"/Contents/Library/Spotlight/"];
+            NSArray *importers = [fm contentsOfDirectoryAtPath:spotlightDirectory error:nil];
+            
+            for(NSString *name in importers) {
+                if([[name pathExtension] isEqualToString:@"mdimporter"] == NO) continue;
+                
+                NSString *mdImporterPath = [spotlightDirectory stringByAppendingPathComponent:name];
+                
+                [mdImporterPaths addObject:mdImporterPath];
+            }
+        }
+        
+        [fm release];
+        
+        terminationBlock(mdImporterPaths);
+    }];
+    
+    [query startQuery];
+}
+
+- (NSArray *)allUTIs {
+    NSMutableSet *set = [NSMutableSet set];
+    
+    [parentsForUTIs enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        NSSet *parents = (NSSet *)obj;
+        
+        [set addObject:key];
+        [set unionSet:parents];
+    }];
+    
+    NSArray *UTIs = [set allObjects];
+    
+    NSArray *sortedUTIs = [UTIs sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        return [obj1 compare:obj2];
+    }];
+    
+    return sortedUTIs;
+}
+
+- (void)lookForUTIs:(void (^) (NSArray *UTIs))successBlock {
+        
+    [self searchForMDImporters:^(NSArray *mdImporters) {
+        
+        [self searchForApplicationsMDImporters:^(NSArray *appMDImporters) {
+
+            NSArray *importers = [mdImporters arrayByAddingObjectsFromArray:appMDImporters];
+            
+            for(NSString *path in importers) {
+                
+                NSArray *UTIs = [[self class] UTISInBundleAtPath:path];
+                
+                for(NSString *uti in UTIs) {
+                    [self addParentsForUTI:uti];
+                }
+                
+            }
+            
+            [self addAllParents];
+            
+            successBlock([self allUTIs]);
+            
+        }];
+
+    }];
+
+    return;
+}
+
 - (NSString *)graphvizDescription {
     
     NSMutableString *ms = [NSMutableString stringWithString:@"digraph G {\n"];
@@ -69,12 +174,12 @@
     [parentsForUTIs setValue:set forKey:UTI];
 }
 
-- (NSDictionary *)buildUTIsDictionary {
+- (void)addAllParents {
     
-    __block NSMutableSet *missingParents = [NSMutableSet setWithArray:[[self class] systemUTIs]];
+    NSMutableArray *missingParents = [NSMutableSet setWithArray:[parentsForUTIs allKeys]];
     
     while([missingParents count] > 0) {
-
+        
         for(NSString *p in missingParents) {
             [self addParentsForUTI:p];
         }
@@ -92,44 +197,6 @@
         }];
         
     }
-        
-    return parentsForUTIs;
-}
-
-+ (NSArray *)systemUTIs {
-    
-    NSArray *paths = [NSArray arrayWithObjects:@"/Applications/", @"/Library/Spotlight/", @"/System/Library/Spotlight/", nil];
-
-    NSMutableSet *set = [NSMutableSet set];
-    
-    for(NSString *path in paths) {
-        NSArray *UTIs = [self UTIsFromMDImportersAtRootPath:path];
-        [set addObjectsFromArray:UTIs];
-    }
-    
-    return [set allObjects];
-}
-
-+ (NSArray *)mdImportersBundlesPathsFromRootPath:(NSString *)rootPath {
-
-    //return [NSArray arrayWithObject:@"/System/Library/Spotlight/Mail.mdimporter"];
-    
-    NSFileManager *localFileManager = [[NSFileManager alloc] init];
-        
-    NSMutableArray *ma = [NSMutableArray array];
-    
-    NSDirectoryEnumerator *enumerator = [localFileManager enumeratorAtPath:rootPath];
-
-    NSString *path = nil;
-    while(path = [enumerator nextObject]) {
-        if([[path pathExtension] isEqualToString:@"mdimporter"]) {
-            NSString *bundlePath = [rootPath stringByAppendingPathComponent:path];
-            NSLog(@"-- found %@", bundlePath);
-            [ma addObject:bundlePath];
-        }
-    }
-    
-    return ma;
 }
 
 + (NSArray *)UTISInBundleAtPath:(NSString *)path {
@@ -150,22 +217,6 @@
     NSAssert([UTIs isKindOfClass:[NSArray class]], @"-- bad class: %@", [LSItemContentTypes class]);
     
     return UTIs;
-}
-
-+ (NSArray *)UTIsFromMDImportersAtRootPath:(NSString *)path {
-    
-    NSLog(@"-- scanning path: %@", path);
-    
-    NSArray *paths = [self mdImportersBundlesPathsFromRootPath:path];
-        
-    NSMutableSet *set = [NSMutableSet set];
-    
-    for(NSString *path in paths) {
-        NSArray *UTIs = [self UTISInBundleAtPath:path];
-        [set addObjectsFromArray:UTIs];
-    }
-    
-    return [set allObjects];
 }
 
 @end
