@@ -27,21 +27,31 @@
 - (void)searchForMDImporters:(void (^) (NSArray *mdImporterPaths))terminationBlock {
     NSMetadataQuery *query = [[NSMetadataQuery alloc] init];
     query.predicate = [NSPredicate predicateWithFormat:@"kMDItemContentTypeTree == 'com.apple.metadata-importer'"];
-
+    
     [[NSNotificationCenter defaultCenter] addObserverForName:NSMetadataQueryDidFinishGatheringNotification object:query queue:nil usingBlock:^(NSNotification *note) {
         
         [query stopQuery];
         
-        NSMutableArray *mdImporterPaths = [NSMutableArray array];
+        NSOperationQueue *oq = [[[NSOperationQueue alloc] init] autorelease];
         
-        for(NSMetadataItem *mdItem in query.results) {
-            NSString *path = [mdItem valueForAttribute:(NSString *)kMDItemPath];
-            [mdImporterPaths addObject:path];
-        }
+        [oq addOperationWithBlock:^{
+            NSMutableArray *mdImporterPaths = [NSMutableArray array];
+            
+            for(NSUInteger i = 0; i < [query resultCount]; i++) {
+                
+                NSMetadataItem *mdItem = [query resultAtIndex:i];
+                
+                NSString *path = [mdItem valueForAttribute:(NSString *)kMDItemPath];
+                [mdImporterPaths addObject:path];
+            }
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                terminationBlock(mdImporterPaths);
+            }];
+        }];
         
-        terminationBlock(mdImporterPaths);
     }];
-
+    
     [query startQuery];
 }
 
@@ -50,32 +60,41 @@
     query.predicate = [NSPredicate predicateWithFormat:@"kMDItemContentTypeTree == 'com.apple.application-bundle'"];
     
     [[NSNotificationCenter defaultCenter] addObserverForName:NSMetadataQueryDidFinishGatheringNotification object:query queue:nil usingBlock:^(NSNotification *note) {
-
+        
         [query stopQuery];
-
-        //NSLog(@"-- %@", note);
         
-        NSFileManager *fm = [[NSFileManager alloc] init];
-
-        NSMutableArray *mdImporterPaths = [NSMutableArray array];
+        NSOperationQueue *oq = [[[NSOperationQueue alloc] init] autorelease];
         
-        for(NSMetadataItem *mdItem in query.results) {
-            NSString *path = [mdItem valueForAttribute:(NSString *)kMDItemPath];
-            NSString *spotlightDirectory = [path stringByAppendingPathComponent:@"/Contents/Library/Spotlight/"];
-            NSArray *importers = [fm contentsOfDirectoryAtPath:spotlightDirectory error:nil];
+        [oq addOperationWithBlock:^{
+            NSFileManager *fm = [[NSFileManager alloc] init];
             
-            for(NSString *name in importers) {
-                if([[name pathExtension] isEqualToString:@"mdimporter"] == NO) continue;
+            NSMutableArray *mdImporterPaths = [NSMutableArray array];
+            
+            for(NSUInteger i = 0; i < [query resultCount]; i++) {
                 
-                NSString *mdImporterPath = [spotlightDirectory stringByAppendingPathComponent:name];
+                NSMetadataItem *mdItem = [query resultAtIndex:i];
                 
-                [mdImporterPaths addObject:mdImporterPath];
+                NSString *path = [mdItem valueForAttribute:(NSString *)kMDItemPath];
+                NSString *spotlightDirectory = [path stringByAppendingPathComponent:@"/Contents/Library/Spotlight/"];
+                NSArray *importers = [fm contentsOfDirectoryAtPath:spotlightDirectory error:nil];
+                
+                for(NSString *name in importers) {
+                    if([[name pathExtension] isEqualToString:@"mdimporter"] == NO) continue;
+                    
+                    NSString *mdImporterPath = [spotlightDirectory stringByAppendingPathComponent:name];
+                    
+                    [mdImporterPaths addObject:mdImporterPath];
+                }
             }
-        }
+            
+            [fm release];
+            
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                terminationBlock(mdImporterPaths);
+            }];
+            
+        }];
         
-        [fm release];
-        
-        terminationBlock(mdImporterPaths);
     }];
     
     [query startQuery];
@@ -101,11 +120,11 @@
 }
 
 - (void)lookForUTIs:(void (^) (NSArray *UTIs))successBlock {
-        
+    
     [self searchForMDImporters:^(NSArray *mdImporters) {
         
         [self searchForApplicationsMDImporters:^(NSArray *appMDImporters) {
-
+            
             NSArray *importers = [mdImporters arrayByAddingObjectsFromArray:appMDImporters];
             
             for(NSString *path in importers) {
@@ -120,13 +139,10 @@
             
             [self addAllParents];
             
-            successBlock([self allUTIs]);
-            
+            successBlock([self allUTIs]);            
         }];
-
+        
     }];
-
-    return;
 }
 
 - (void)addParentsForUTI:(NSString *)UTI {
@@ -137,7 +153,7 @@
     id o = [d valueForKey:(NSString *)kUTTypeConformsToKey];
     
     NSMutableSet *set = [NSMutableSet set];
-
+    
     if(o == nil) {
         [set addObjectsFromArray:[NSArray array]];
     } else if([o isKindOfClass:[NSString class]]) {
@@ -147,6 +163,8 @@
     } else {
         NSAssert(NO, @"-- bad class: %@", o);
     }
+    
+    [d release];
     
     [parentsForUTIs setValue:set forKey:UTI];
 }
@@ -182,7 +200,7 @@
     
     NSDictionary *CFBundleDocumentTypes = [infoDictionary valueForKey:@"CFBundleDocumentTypes"];
     NSArray *LSItemContentTypes = [CFBundleDocumentTypes valueForKey:@"LSItemContentTypes"];
-
+    
     if(LSItemContentTypes == nil) {
         return [NSArray array];
     }
