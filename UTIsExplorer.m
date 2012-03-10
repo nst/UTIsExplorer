@@ -59,10 +59,10 @@
     NSMetadataQuery *query = [[NSMetadataQuery alloc] init];
     query.predicate = [NSPredicate predicateWithFormat:@"kMDItemContentTypeTree == 'com.apple.application-bundle'"];
     
-    [[NSNotificationCenter defaultCenter] addObserverForName:NSMetadataQueryDidFinishGatheringNotification object:query queue:nil usingBlock:^(NSNotification *note) {
+    __block id observer = [[NSNotificationCenter defaultCenter] addObserverForName:NSMetadataQueryDidFinishGatheringNotification object:query queue:nil usingBlock:^(NSNotification *note) {
         
         [query stopQuery];
-        
+
         NSOperationQueue *oq = [[[NSOperationQueue alloc] init] autorelease];
         
         [oq addOperationWithBlock:^{
@@ -90,6 +90,9 @@
             [fm release];
             
             [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                
+                [[NSNotificationCenter defaultCenter] removeObserver:observer];
+
                 terminationBlock(mdImporterPaths);
             }];
             
