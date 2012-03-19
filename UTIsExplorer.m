@@ -122,7 +122,29 @@
     return sortedUTIs;
 }
 
+- (void)readSystemDeclaredUTIs {
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"SystemDeclaredUTIs" ofType:@"plist"];
+    
+    if(path == nil) { // may be running from command line
+#warning edit this path to match yours
+        path = @"/Users/nst/Projects/UTIsExplorer/SystemDeclaredUTIs.plist";
+    }
+    
+    NSArray *systemDeclaredUTIs = [NSArray arrayWithContentsOfFile:path];
+    
+    if(systemDeclaredUTIs == nil) {
+        NSLog(@"-- cannot find UTIs in %@", path);
+    }
+    
+    for(NSString *uti in systemDeclaredUTIs) {
+        [self addParentsForUTI:uti];
+    }
+}
+
 - (void)lookForUTIs:(void (^) (NSArray *UTIs))successBlock {
+    
+    [self readSystemDeclaredUTIs];
     
     [self searchForMDImporters:^(NSArray *mdImporters) {
         

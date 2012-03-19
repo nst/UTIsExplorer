@@ -38,6 +38,7 @@
 		034C8A3E1502A46500FD7204 /* UTIsExplorer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UTIsExplorer.h; sourceTree = "<group>"; };
 		034C8A3F1502A46500FD7204 /* UTIsExplorer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UTIsExplorer.m; sourceTree = "<group>"; };
 		034C8A401502A46F00FD7204 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		034DA29A1517B1280066CAF3 /* SystemDeclaredUTIs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SystemDeclaredUTIs.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +60,7 @@
 			children = (
 				034C8A3E1502A46500FD7204 /* UTIsExplorer.h */,
 				034C8A3F1502A46500FD7204 /* UTIsExplorer.m */,
+				034DA29A1517B1280066CAF3 /* SystemDeclaredUTIs.plist */,
 				034C8A311502A42200FD7204 /* UTIsExplorer */,
 				034C8A2E1502A42200FD7204 /* Frameworks */,
 				034C8A2C1502A42200FD7204 /* Products */,
