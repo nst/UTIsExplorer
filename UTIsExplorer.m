@@ -124,6 +124,8 @@
 
 - (void)readSystemDeclaredUTIs {
     
+    // http://developer.apple.com/library/mac/#documentation/Miscellaneous/Reference/UTIRef/Articles/System-DeclaredUniformTypeIdentifiers.html
+    
     NSString *path = [[NSBundle mainBundle] pathForResource:@"SystemDeclaredUTIs" ofType:@"plist"];
     
     if(path == nil) { // may be running from command line
