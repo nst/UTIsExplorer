@@ -123,14 +123,17 @@
 }
 
 - (void)readSystemDeclaredUTIs {
-    
+	NSString * const systemDeclaredUTIsFileName = @"SystemDeclaredUTIs";
+    NSString * const systemDeclaredUTIsFileExtension = @"plist";
+
     // http://developer.apple.com/library/mac/#documentation/Miscellaneous/Reference/UTIRef/Articles/System-DeclaredUniformTypeIdentifiers.html
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"SystemDeclaredUTIs" ofType:@"plist"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:systemDeclaredUTIsFileName ofType:systemDeclaredUTIsFileExtension];
     
     if(path == nil) { // may be running from command line
-#warning edit this path to match yours
-        path = @"/Users/nst/Projects/UTIsExplorer/SystemDeclaredUTIs.plist";
+        path = [[[[NSFileManager defaultManager] currentDirectoryPath]
+				 stringByAppendingPathComponent:systemDeclaredUTIsFileName]
+				stringByAppendingPathExtension:systemDeclaredUTIsFileExtension];
     }
     
     NSArray *systemDeclaredUTIs = [NSArray arrayWithContentsOfFile:path];
