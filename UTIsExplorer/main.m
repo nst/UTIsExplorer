@@ -23,7 +23,11 @@ int main(int argc, const char * argv[])
         
             NSString *s = [utisExplorer graphvizDescription];
             
-            NSString *path = [@"~/Desktop/utis_graph.dot" stringByExpandingTildeInPath];
+			NSString * const graphFileName = @"utis_graph";
+			NSString * const graphFileExtension = @"dot";
+            NSString *path =  [[[[NSBundle mainBundle] bundlePath]
+								stringByAppendingPathComponent:graphFileName]
+							   stringByAppendingPathExtension:graphFileExtension];
             
             NSError *error = nil;
             BOOL success = [s writeToFile:path atomically:YES encoding:NSISOLatin1StringEncoding error:&error];
