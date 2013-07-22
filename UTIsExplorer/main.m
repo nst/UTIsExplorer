@@ -30,7 +30,7 @@ int main(int argc, const char * argv[])
 							   stringByAppendingPathExtension:graphFileExtension];
             
             NSError *error = nil;
-            BOOL success = [s writeToFile:path atomically:YES encoding:NSISOLatin1StringEncoding error:&error];
+            BOOL success = [s writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:&error];
             if(success) {
                 NSLog(@"-- wrote file %@", path);
             } else {
