@@ -10,21 +10,33 @@
 		0332361A150496F700F3AB5F /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03323619150496F700F3AB5F /* AppKit.framework */; };
 		034C8A301502A42200FD7204 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034C8A2F1502A42200FD7204 /* Foundation.framework */; };
 		034C8A331502A42200FD7204 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C8A321502A42200FD7204 /* main.m */; };
-		034C8A371502A42200FD7204 /* UTIsExplorer.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 034C8A361502A42200FD7204 /* UTIsExplorer.1 */; };
+		034C8A371502A42200FD7204 /* UTIsExplorer.1 in Copy Files */ = {isa = PBXBuildFile; fileRef = 034C8A361502A42200FD7204 /* UTIsExplorer.1 */; };
 		034C8A411502A46F00FD7204 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 034C8A401502A46F00FD7204 /* CoreServices.framework */; };
 		034C8A421502A4E700FD7204 /* UTIsExplorer.m in Sources */ = {isa = PBXBuildFile; fileRef = 034C8A3F1502A46500FD7204 /* UTIsExplorer.m */; };
+		03BB7BAB179D45C60007CB64 /* SystemDeclaredUTIs.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 034DA29A1517B1280066CAF3 /* SystemDeclaredUTIs.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		034C8A291502A42200FD7204 /* CopyFiles */ = {
+		034C8A291502A42200FD7204 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				034C8A371502A42200FD7204 /* UTIsExplorer.1 in CopyFiles */,
+				034C8A371502A42200FD7204 /* UTIsExplorer.1 in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 1;
+		};
+		03BB7BAA179D45AD0007CB64 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				03BB7BAB179D45C60007CB64 /* SystemDeclaredUTIs.plist in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -112,7 +124,8 @@
 			buildPhases = (
 				034C8A271502A42200FD7204 /* Sources */,
 				034C8A281502A42200FD7204 /* Frameworks */,
-				034C8A291502A42200FD7204 /* CopyFiles */,
+				034C8A291502A42200FD7204 /* Copy Files */,
+				03BB7BAA179D45AD0007CB64 /* CopyFiles */,
 			);
 			buildRules = (
 			);

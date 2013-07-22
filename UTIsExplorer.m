@@ -129,11 +129,10 @@
     // http://developer.apple.com/library/mac/#documentation/Miscellaneous/Reference/UTIRef/Articles/System-DeclaredUniformTypeIdentifiers.html
     
     NSString *path = [[NSBundle mainBundle] pathForResource:systemDeclaredUTIsFileName ofType:systemDeclaredUTIsFileExtension];
-    
+        
     if(path == nil) { // may be running from command line
-        path = [[[[NSFileManager defaultManager] currentDirectoryPath]
-				 stringByAppendingPathComponent:systemDeclaredUTIsFileName]
-				stringByAppendingPathExtension:systemDeclaredUTIsFileExtension];
+        NSString *currentDirectory = [[[NSProcessInfo processInfo] environment] valueForKey:@"PWD"];
+        path = [[currentDirectory stringByAppendingPathComponent:systemDeclaredUTIsFileName] stringByAppendingPathExtension:systemDeclaredUTIsFileExtension];
     }
     
     NSArray *systemDeclaredUTIs = [NSArray arrayWithContentsOfFile:path];
@@ -201,7 +200,7 @@
 
 - (void)addAllParents {
     
-    NSMutableArray *missingParents = [NSMutableSet setWithArray:[parentsForUTIs allKeys]];
+    NSMutableSet *missingParents = [NSMutableSet setWithArray:[parentsForUTIs allKeys]];
     
     while([missingParents count] > 0) {
         
